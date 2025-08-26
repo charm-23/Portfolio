@@ -14,8 +14,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { MailIcon, PhoneIcon, LinkedinIcon, GithubIcon, CheckCircleIcon, BookOpenIcon, AwardIcon, UsersIcon, LanguagesIcon, SendHorizonalIcon } from "lucide-react";
+import { Card, CardHeader, CardFooter, CardTitle, CardAction, CardDescription, CardContent } from "@/components/ui/card";
+import { MailIcon, PhoneIcon, LinkedinIcon, GithubIcon, CheckCircleIcon, BookOpenIcon, AwardIcon, UsersIcon, LanguagesIcon, SendHorizonalIcon, MenuIcon, XIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
 import React, { useState } from "react";
 
 const socialLinks = [
@@ -186,21 +187,60 @@ function ContactMeModal() {
   );
 }
 
+function MobileNav({ onClose }: { onClose: () => void }) {
+  return (
+    <div className="fixed inset-0 bg-black/30 z-50 flex md:hidden">
+      <div className="min-w-[70vw] max-w-xs bg-white h-full shadow-xl flex flex-col p-6 relative">
+        <button onClick={onClose} aria-label="Close Menu" className="absolute top-3 right-3">
+          <XIcon className="w-7 h-7 text-violet-700" />
+        </button>
+        <a href="mailto:23cs434@dtu.ac.in" className="flex items-center text-gray-700 hover:text-violet-600 mb-4 mt-14"><MailIcon className="w-5 h-5 mr-2" />23cs434@dtu.ac.in</a>
+        <a href="tel:+919871315002" className="flex items-center text-gray-700 hover:text-violet-600 mb-4"><PhoneIcon className="w-5 h-5 mr-2" />+91 9871315002</a>
+        <a href="https://www.linkedin.com/in/tanvics434/" target="_blank" rel="noopener noreferrer" className="flex items-center text-gray-700 hover:text-violet-600 mb-4"><LinkedinIcon className="w-5 h-5 mr-2" />LinkedIn</a>
+        <ContactMeModal />
+      </div>
+      <button
+        aria-label="Close sidebar"
+        className="flex-1 h-full cursor-default"
+        onClick={onClose}
+        tabIndex={-1}
+      />
+    </div>
+  );
+}
+
 function Portfolio() {
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
+
   return (
     <main className="min-h-screen flex flex-col bg-gradient-to-br from-purple-50 to-blue-50">
       {/* Header */}
-      <nav className="flex items-center justify-between px-8 py-4 border-b bg-white/80 backdrop-blur z-20 shadow-sm sticky top-0">
+      <nav className="flex items-center justify-between px-4 md:px-8 py-4 border-b bg-white/80 backdrop-blur z-20 shadow-sm sticky top-0">
         <span className="text-xl font-bold text-violet-700 tracking-tight">Tanvi</span>
-        <div className="flex gap-4 items-center">
+
+        {/* Desktop nav links */}
+        <div className="hidden md:flex gap-4 items-center">
           <a href="mailto:23cs434@dtu.ac.in" className="flex items-center text-gray-700 hover:text-violet-600"><MailIcon className="w-5 h-5 mr-1" />23cs434@dtu.ac.in</a>
           <a href="tel:+919871315002" className="flex items-center text-gray-700 hover:text-violet-600"><PhoneIcon className="w-5 h-5 mr-1" />+91 9871315002</a>
           <a href="https://www.linkedin.com/in/tanvics434/" target="_blank" rel="noopener noreferrer" className="flex items-center text-gray-700 hover:text-violet-600"><LinkedinIcon className="w-5 h-5 mr-1" />LinkedIn</a>
           <ContactMeModal />
         </div>
+
+        {/* Mobile menu button */}
+        <button
+          type="button"
+          className="md:hidden flex items-center justify-center rounded-full border border-violet-300 p-2 text-violet-700 hover:bg-violet-50"
+          aria-label="Open navigation menu"
+          aria-controls="mobile-nav"
+          aria-expanded={mobileNavOpen}
+          onClick={() => setMobileNavOpen(true)}
+        >
+          <MenuIcon className="w-7 h-7" />
+        </button>
       </nav>
+      {mobileNavOpen && <MobileNav onClose={() => setMobileNavOpen(false)} />}
       {/* Main Content */}
-      <div className="max-w-5xl mx-auto w-full px-4 md:px-8 flex flex-col md:flex-row gap-8 py-10 md:py-14">
+      <div className="max-w-5xl mx-auto w-full px-2 xs:px-4 md:px-8 flex flex-col md:flex-row gap-8 py-8 md:py-14">
         {/* Left Sidebar */}
         <aside className="w-full md:w-1/3 flex flex-col gap-6">
           {/* Profile */}
@@ -259,7 +299,7 @@ function Portfolio() {
             <CardContent>
               <div className="space-y-2">
                 {education.map(e => (
-                  <div key={e.degree} className="flex flex-col md:flex-row justify-between md:items-center gap-1 border-b pb-2 last:border-b-0 last:pb-0">
+                  <div key={e.degree} className="flex flex-col md:flex-row md:justify-between md:items-center gap-1 border-b pb-2 last:border-b-0 last:pb-0">
                     <span><span className="font-bold text-violet-700">{e.degree}</span> <span className="text-xs text-gray-500 ml-1">({e.year})</span></span>
                     <span className="text-sm text-gray-700">{e.institute}</span>
                     <span className="text-sm text-violet-700 font-semibold">{e.score}</span>
