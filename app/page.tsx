@@ -14,9 +14,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Card, CardHeader, CardFooter, CardTitle, CardAction, CardDescription, CardContent } from "@/components/ui/card";
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { MailIcon, PhoneIcon, LinkedinIcon, GithubIcon, CheckCircleIcon, BookOpenIcon, AwardIcon, UsersIcon, LanguagesIcon, SendHorizonalIcon } from "lucide-react";
-import { cn } from "@/lib/utils";
 import React, { useState } from "react";
 
 const socialLinks = [
